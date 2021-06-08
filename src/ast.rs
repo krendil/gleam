@@ -39,6 +39,9 @@ impl<A, B, C, D, E> Module<A, B, C, D, E> {
             .iter()
             .flat_map(|s| match s {
                 Statement::Import {
+                    module, ..
+                } if module == &["gleam".to_string()] => None,
+                Statement::Import {
                     module, location, ..
                 } => Some((module.join("/"), *location)),
                 _ => None,
